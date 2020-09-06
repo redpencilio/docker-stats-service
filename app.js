@@ -42,13 +42,24 @@ let monitoredContainers = [];
 
 updateMonitoredContainers();
 
+/**
+ * Delta messages endpoint.
+ *
+ * Upon receiving a delta, we fetch the new statusus of the
+ * containers.  This should be sufficient for the vast majority of
+ * cases.  Only situation to cater for still, is a crashing service
+ * that auto-restarts.
+ */
+app.post("/.mu/delta", async (_req, res) => {
+  await updateMonitoredContainers();
+  res.status(204);
+});
+
 // DONE: Query for containers to watch on boot
 
-// TODO: Inspect incoming delta changes to refetch list of servers to monitor
+// DONE: Inspect incoming delta changes to refetch list of servers to monitor
 
 // TODO: Build inspection loop to fetch container information
-
-// TODO: Fetch the necessary containers in a loop
 
 /**
  * Updates the monitored containers.
