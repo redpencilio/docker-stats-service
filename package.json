@@ -1,0 +1,25 @@
+{
+  "name": "docker-stats-service",
+  "version": "0.0.1",
+  "description": "Semantic Works service which fetches stats from running docker containers.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/redpencilio/docker-stats-service.git"
+  },
+  "keywords": [
+    "mu-service"
+  ],
+  "author": "Aad Versteden <madnificent@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/redpencilio/docker-stats-service/issues"
+  },
+  "homepage": "https://github.com/redpencilio/docker-stats-service#readme",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}
