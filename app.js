@@ -61,7 +61,7 @@ setInterval(fetchContainerStats, 10000);
  */
 app.post("/.mu/delta", async (_req, res) => {
   await updateMonitoredContainers();
-  res.status(204);
+  res.sendStatus(204);
 });
 
 // DONE: Query for containers to watch on boot
