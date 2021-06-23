@@ -89,7 +89,7 @@ async function updateMonitoredContainers() {
                     docker:id ?dockerId;
                     docker:name ?name;
                     docker:state/docker:status "running";
-                    docker:label/docker:key "logging"
+                    docker:label/docker:key "logging".
                OPTIONAL {
                  ?uri docker:label ?label.
                  ?label docker:key "com.docker.compose.project";
