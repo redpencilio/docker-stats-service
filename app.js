@@ -84,22 +84,28 @@ async function updateMonitoredContainers() {
     const dbContainers =
           (await query(
             `PREFIX docker: <https://w3.org/ns/bde/docker#>
-             SELECT DISTINCT ?uri ?dockerId ?name ?project WHERE {
+             SELECT DISTINCT ?uri ?dockerId ?name WHERE {
                ?uri a docker:Container;
                     docker:id ?dockerId;
                     docker:name ?name;
                     docker:state/docker:status "running";
                     docker:label/docker:key "logging".
-               OPTIONAL {
-                 ?uri docker:label ?label.
-                 ?label docker:key "com.docker.compose.project";
-                        docker:value ?project.
-               }
              }`))
           .results
           .bindings;
 
-    // console.log("Got connection");
+    for (const dbContainer of dbContainers) {
+      const result = await query(
+        `PREFIX docker: <https://w3.org/ns/bde/docker#>
+         SELECT ?project WHERE {
+           <${dbContainer.uri.value}> docker:label ?label .
+           ?label docker:key "com.docker.compose.project";
+                  docker:value ?project.
+         } LIMIT 1`);
+      if (result.results.bindings.length) {
+        dbContainer.project = result.results.bindings[0].project;
+      }
+    }
 
     // filter out elements in the current array which don't exist anymore
     let monitoredContainersCopy = [...monitoredContainers];
@@ -136,7 +142,6 @@ async function updateMonitoredContainers() {
           } ) );
 
     monitoredContainers = [...monitoredContainersCopy, ...newContainers];
-    // console.log("Updated global variable");
   } catch (e) {
     // could not fetch containers, retrying in a moment
 
