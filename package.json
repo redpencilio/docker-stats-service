@@ -1,6 +1,6 @@
 {
   "name": "docker-stats-service",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Semantic Works service which fetches stats from running docker containers.",
   "main": "app.js",
   "scripts": {
