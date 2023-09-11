@@ -3,6 +3,8 @@ import { app, query, errorHandler } from 'mu';
 import http from 'http';
 import request from 'request';
 
+const CONTAINER_STATS_QUERY_INTERVAL = process.env.QUERY_INTERVAL || 10000
+
 class MonitoredContainer {
   /**
    * URI which identifies the container.
@@ -47,9 +49,8 @@ class MonitoredContainer {
  * Contains the list of all containers which should be monitored.
  */
 let monitoredContainers = [];
-
 updateMonitoredContainers();
-setInterval(fetchContainerStats, 10000);
+setInterval(fetchContainerStats, CONTAINER_STATS_QUERY_INTERVAL);
 
 /**
  * Delta messages endpoint.
